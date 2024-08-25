@@ -1,4 +1,3 @@
-
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,24 +6,26 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Order
 from .forms import OrderProductForm
 
-class MyOrderView(LoginRequiredMixin,DetailView):
+
+class MyOrderView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "orders/my_order.html"
     context_object_name = "order"
-    
-    #se muestre las ordenes que estan activas
+
+    # se muestre las ordenes que estan activas
     def get_object(self, QuerySet=None):
-        return Order.objects.filter(is_active=True, user = self.request.user).first()
-    
+        return Order.objects.filter(is_active=True, user=self.request.user).first()
+
+
 class CreateOrderProductView(CreateView):
     template_name = "orders/create_order_product.html"
     form_class = OrderProductForm
-    success_url = reverse_lazy('my_order')
+    success_url = reverse_lazy("my_order")
 
     def form_valid(self, form):
-        order,_ = Order.objects.get_or_create(
-            is_active = True,
-            user = self.request.user,
+        order, _ = Order.objects.get_or_create(
+            is_active=True,
+            user=self.request.user,
         )
         form.instance.order = order
         form.instance.quantity = 1
