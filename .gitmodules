@@ -2,6 +2,3 @@
     path = coffe_shop
     url = <repository-url>
 
-[submodule "aws-elastic-beanstalk-cli-setup"]
-    path = aws-elastic-beanstalk-cli-setup
-    url = <repository-url>
